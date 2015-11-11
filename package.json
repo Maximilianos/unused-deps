@@ -1,0 +1,33 @@
+{
+  "name": "unused-deps",
+  "version": "0.1.0",
+  "description": "Approximately list the dependencies in your package.json that are not explicitly required/imported in your codebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maximilianos/unused-deps.git"
+  },
+  "keywords": [
+    "introspection",
+    "dependencies",
+    "package",
+    "unused",
+    "packages"
+  ],
+  "author": "Max GJ Panas <m@maxpanas.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Maximilianos/unused-deps/issues"
+  },
+  "homepage": "https://github.com/Maximilianos/unused-deps#readme",
+  "dependencies": {
+    "read-glob-promise": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.1.2",
+    "babel-preset-es2015": "^6.1.2"
+  }
+}
