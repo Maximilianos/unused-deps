@@ -71,11 +71,11 @@ export function getUnusedDependencies(registeredDependencies, usedDependencies, 
 export default function unusedDependencies(glob, {
 	// the regex to use to extract all the explicit
 	// dependency uses from the codebase
-	matchRegex = /require\(('|")[a-z0-9\-_\\/]+('|")\)/gi,
+	matchRegex = (/require\(('|")[a-z0-9\-_\\/]+('|")\)/gi),
 
 	// the regex to use to trim the
 	// matched strings
-	trimRegex = /(require\()|('|")|\)/gi,
+	trimRegex = (/(require\()|('|")|\)/gi),
 
 	// the package.json keys to use to determine
 	// registered dependencies
