@@ -5,7 +5,7 @@ import projectInfo from '../../package.json';
 
 program
 	.version(projectInfo.version)
-	.description()
+	.description('Discover registered dependencies that are not used in your code.')
+	.action(() => {
 
-program
-	.command('');
+	});

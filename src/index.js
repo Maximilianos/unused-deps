@@ -13,10 +13,10 @@ import {match, trim, exclude, unique, alphabetically} from './utils';
  */
 export function getRegisteredDependencies(projectConfig, locations) {
 	return locations.reduce(
-			(packages, key) => projectConfig[key]
-					? packages.concat(Object.keys(projectConfig[key]))
-					: packages
-			, []);
+		(packages, key) => projectConfig[key]
+			? packages.concat(Object.keys(projectConfig[key]))
+			: packages
+		, []);
 }
 
 
@@ -43,16 +43,31 @@ export function getUsedDependencies(glob, matchRegex, trimRegex) {
 
 
 /**
+ * Approximately return packages that are
+ * registered in your package json but
+ * not used in your code
  *
- * @param registeredDependencies
- * @param usedDependencies
- * @param exclusions
+ * @param usedPackages
+ * @param locations
+ * @param excluded
+ * @param projectConfig
  * @returns {*}
  */
-export function getUnusedDependencies(registeredDependencies, usedDependencies, exclusions = []) {
-	return registeredDependencies
-		.filter(exclude(exclusions))
-		.filter(exclude(usedDependencies));
+export function getUnusedDependencies(usedPackages, {
+	// the package.json keys to use to determine
+	// registered dependencies
+	locations = ['dependencies', 'devDependencies'],
+
+	// any packages you would want to exclude
+	// from the final list
+	excluded = [],
+
+	// package json
+	projectConfig = require('./package.json')
+} = {}) {
+	return getRegisteredDependencies(projectConfig, locations)
+		.filter(exclude(usedPackages))
+		.filter(exclude(excluded));
 }
 
 
@@ -90,11 +105,7 @@ export default function unusedDependencies(glob, {
 } = {}) {
 	getUsedDependencies(glob, matchRegex, trimRegex)
 		.then(log('used packages:'))
-		.then(usedPackages =>
-			getRegisteredDependencies(projectConfig, locations)
-				.filter(exclude(usedPackages))
-				.filter(exclude(excluded))
-		)
+		.then(usedDependencies => getUnusedDependencies(usedDependencies, {locations, excluded, projectConfig}))
 		.then(log('registered but not explicitly used packages:'))
 		.catch(err => console.error(err));
 }
